@@ -12,7 +12,7 @@ but it's not a fun problem to spend time on.
 Install with [npm](https://npmjs.org/):
 
 ```js
-npm install --dev common-good
+npm install --save-dev common-good
 ```
 
 Add common-good to `package.json`:
