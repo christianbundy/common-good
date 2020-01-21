@@ -1,0 +1,23 @@
+{
+  "name": "common-good",
+  "version": "1.0.0",
+  "description": "- cspell - prettier - if JS   - dependency-check   - eslint:recommended   - tsc - if CSS",
+  "main": "index.js",
+  "scripts": {
+    "fix": "node . fix",
+    "test": "dependency_check_suffix='-i eslint -i prettier -i typescript -i dependency-check -i cspell -i stylelint' node ."
+  },
+  "bin": {
+    "common-good": "."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cspell": "^4.0.44",
+    "dependency-check": "^4.1.0",
+    "eslint": "^6.8.0",
+    "prettier": "^1.19.1",
+    "stylelint": "^13.0.0",
+    "typescript": "^3.7.5"
+  }
+}
