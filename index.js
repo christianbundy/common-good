@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const childProcess = require("child_process");
 
 const packageMain = process.env.npm_package_main;

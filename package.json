@@ -1,17 +1,17 @@
 {
   "name": "common-good",
   "version": "1.0.0",
-  "description": "- cspell - prettier - if JS   - dependency-check   - eslint:recommended   - tsc - if CSS",
+  "description": "All of the best practices without any of the boilerplate",
   "main": "index.js",
   "scripts": {
     "fix": "node . fix",
     "test": "dependency_check_suffix='-i eslint -i prettier -i typescript -i dependency-check -i cspell -i stylelint' node ."
   },
   "bin": {
-    "common-good": "."
+    "common-good": "index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Christian Bundy <christianbundy@fraction.io>",
+  "license": "AGPL-3.0",
   "dependencies": {
     "cspell": "^4.0.44",
     "dependency-check": "^4.1.0",
@@ -19,5 +19,14 @@
     "prettier": "^1.19.1",
     "stylelint": "^13.0.0",
     "typescript": "^3.7.5"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christianbundy/common-good.git"
+  },
+  "bugs": {
+    "url": "https://github.com/christianbundy/common-good/issues"
+  },
+  "homepage": "https://github.com/christianbundy/common-good#readme"
 }
