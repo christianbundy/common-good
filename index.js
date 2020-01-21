@@ -7,7 +7,7 @@ const main = packageMain != null ? packageMain : ".";
 
 const checkCommands = [
   "prettier --check '**'",
-  "dependency-check ./package.json",
+  "dependency-check -i common-good ./package.json",
   "cspell --no-summary '**/*.{js,md}'",
   'stylelint --allow-empty-input "**/*.css"',
   `tsc --allowJs --resolveJsonModule --lib dom --checkJs --noEmit --skipLibCheck ${main}`,
