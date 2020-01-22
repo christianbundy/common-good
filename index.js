@@ -1,31 +1,43 @@
 #!/usr/bin/env node
 
 const childProcess = require("child_process");
+const path = require("path");
 
 const packageMain = process.env.npm_package_main;
 const main = packageMain != null ? packageMain : ".";
 
+const npmBin = childProcess
+  .execSync("npm bin")
+  .toString()
+  .trim();
+
 const checkCommands = [
-  "prettier --check '**'",
-  "dependency-check -i common-good ./package.json",
-  "cspell --no-summary '**/*.{js,md}'",
+  `eslint ${main}`,
   'stylelint --allow-empty-input "**/*.css"',
   `tsc --allowJs --resolveJsonModule --lib dom --checkJs --noEmit --skipLibCheck ${main}`,
-  `eslint ${main}`
+  "dependency-check -i common-good ./package.json",
+  "cspell --no-summary '**/*.{js,md}'",
+  "prettier --check '**'"
 ];
 
 const fixCommands = [
-  "prettier --write '**'",
+  `eslint --fix ${main}`,
   'stylelint --fix --allow-empty-input "**/*.css"',
-  `eslint --fix ${main}`
+  "prettier --write '**'"
 ];
 
 const run = command => {
   console.log(`=> ${command}`);
-  const commandName = command.split(" ")[0].replace(/-/g, "_");
+  const moduleName = command.split(" ")[0];
+  const commandName = moduleName.replace(/-/g, "_");
+  const restOfCommand = command
+    .split(" ")
+    .slice(1)
+    .join(" ");
   const envSuffix = process.env[`${commandName}_suffix`];
   const suffix = envSuffix != null ? envSuffix : "";
-  const finalCommand = [command, suffix].join(" ");
+  const bin = path.join(npmBin, moduleName);
+  const finalCommand = [bin, restOfCommand, suffix].join(" ");
   console.log(childProcess.execSync(finalCommand).toString());
 };
 
@@ -36,9 +48,13 @@ if (subCommand == null || subCommand === "check") {
     try {
       run(command);
     } catch (e) {
-      console.log(e.stdout.toString());
-      console.log(e.stderr.toString());
-      process.exit(1);
+      if (e.stdout) {
+        console.log(e.stdout.toString());
+        console.log(e.stderr.toString());
+        process.exit(1);
+      } else {
+        throw e;
+      }
     }
   });
 } else if (subCommand === "fix") {
