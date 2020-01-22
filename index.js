@@ -8,10 +8,22 @@ const npmBin = childProcess
   .stdout.toString()
   .trim();
 
+// Fix package.json
+childProcess
+  .spawnSync("npm", ["init", "-y"])
+  .stdout.toString()
+  .trim();
+
 const main = childProcess
   .spawnSync("npm", ["view", ".", ".main"])
   .stdout.toString()
   .trim();
+
+if (main === "") {
+  throw new Error(
+    'Package.json is missing the "main" property. Please add one.'
+  );
+}
 
 const checkCommands = [
   `eslint ${main}`,

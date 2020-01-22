@@ -28,5 +28,7 @@
   "bugs": {
     "url": "https://github.com/christianbundy/common-good/issues"
   },
-  "homepage": "https://github.com/christianbundy/common-good#readme"
+  "homepage": "https://github.com/christianbundy/common-good#readme",
+  "devDependencies": {},
+  "keywords": []
 }
