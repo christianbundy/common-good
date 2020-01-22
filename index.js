@@ -40,7 +40,7 @@ const run = command => {
 
   const suffix = suffixIndex !== -1 ? process.argv[suffixIndex + 1] : "";
   const bin = path.join(npmBin, moduleName);
-  const finalCommand = [bin, restOfCommand, suffix];
+  const finalCommand = ['node', bin, restOfCommand, suffix];
   console.log(childProcess.execSync(finalCommand).toString());
 };
 
