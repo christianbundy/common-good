@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 const childProcess = require("child_process");
+const fs = require("fs");
 const path = require("path");
 
 const npmBin = childProcess
-  .spawnSync("npm", ["bin"])
+  .spawnSync("npm", ["bin"], { cwd: __dirname })
   .stdout.toString()
   .trim();
 
@@ -14,10 +15,11 @@ childProcess
   .stdout.toString()
   .trim();
 
-const main = childProcess
-  .spawnSync("npm", ["view", ".", ".main"])
-  .stdout.toString()
-  .trim();
+const packageString = fs.readFileSync(
+  path.join(process.cwd(), "package.json"),
+  "utf8"
+);
+const { main } = JSON.parse(packageString);
 
 if (main === "") {
   throw new Error(
