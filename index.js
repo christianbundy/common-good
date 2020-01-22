@@ -3,75 +3,66 @@
 const childProcess = require("child_process");
 const path = require("path");
 
-const packageMain = process.env.npm_package_main;
-const main = packageMain != null ? packageMain : ".";
-
 const npmBin = childProcess
-  .execSync("npm bin")
-  .toString()
+  .spawnSync("npm", ["bin"])
+  .stdout.toString()
+  .trim();
+
+const main = childProcess
+  .spawnSync("npm", ["view", ".", ".main"])
+  .stdout.toString()
   .trim();
 
 const checkCommands = [
   `eslint ${main}`,
-  'stylelint --allow-empty-input "**/*.css"',
+  "stylelint --allow-empty-input **/*.css",
   `tsc --allowJs --resolveJsonModule --lib dom --checkJs --noEmit --skipLibCheck ${main}`,
   "dependency-check -i common-good ./package.json",
-  "cspell --no-summary '**/*.{js,md}'",
-  "prettier --check '**'"
+  "cspell --no-summary **.{js,ts,md",
+  "prettier --check **.{js,ts,jsx,json,css,scss,less,html,vue,gql,md,yaml}"
 ];
 
 const fixCommands = [
-  `eslint --fix ${main}`,
-  'stylelint --fix --allow-empty-input "**/*.css"',
-  "prettier --write '**'"
+  "prettier --write **.{js,ts,jsx,json,css,scss,less,html,vue,gql,md,yaml}",
+  "stylelint --fix --allow-empty-input **/*.css",
+  `eslint --fix ${main}`
 ];
 
 const run = command => {
-  console.log(`=> ${command}`);
   const moduleName = command.split(" ")[0];
-  const restOfCommand = command
-    .split(" ")
-    .slice(1)
-    .join(" ");
+  const restOfCommand = command.split(" ").slice(1);
 
   const suffixIndex = process.argv.findIndex(
     arg => arg === `--${moduleName}-suffix`
   );
 
-  const suffix = suffixIndex !== -1 ? process.argv[suffixIndex + 1] : "";
+  if (suffixIndex !== -1) {
+    const suffixArgs = process.argv[suffixIndex + 1].split(" ");
+    restOfCommand.push(...suffixArgs);
+  }
+  console.log(`=> ${moduleName} ${restOfCommand.join(" ")}`);
   const bin = path.join(npmBin, moduleName);
-  const finalArgs = [bin, restOfCommand, suffix];
-  console.log(childProcess.execSync('node', finalArgs).toString());
+  const result = childProcess.spawnSync(bin, restOfCommand, {
+    cwd: process.cwd()
+  });
+  if (result.stdout) {
+    console.log(result.stdout.toString().trim());
+  }
+  if (result.stderr) {
+    console.error(result.stderr.toString().trim());
+  }
+  if (result.error) {
+    throw result.error;
+  }
+  if (result.status !== 0) {
+    process.exit(1);
+  }
 };
 
 const subCommand = process.argv[2];
 
 if (subCommand == null || subCommand === "check") {
-  checkCommands.forEach(command => {
-    try {
-      run(command);
-    } catch (e) {
-      if (e.stdout) {
-        console.log(e.stdout.toString());
-        console.log(e.stderr.toString());
-        process.exit(1);
-      } else {
-        throw e;
-      }
-    }
-  });
+  checkCommands.forEach(run);
 } else if (subCommand === "fix") {
-  fixCommands.forEach(command => {
-    try {
-      run(command);
-    } catch (e) {
-      if (e.stdout) {
-        console.log(e.stdout.toString());
-        console.log(e.stderr.toString());
-        process.exit(1);
-      } else {
-        throw e;
-      }
-    }
-  });
+  fixCommands.forEach(run);
 }
