@@ -29,13 +29,16 @@ const fixCommands = [
 const run = command => {
   console.log(`=> ${command}`);
   const moduleName = command.split(" ")[0];
-  const commandName = moduleName.replace(/-/g, "_");
   const restOfCommand = command
     .split(" ")
     .slice(1)
     .join(" ");
-  const envSuffix = process.env[`${commandName}_suffix`];
-  const suffix = envSuffix != null ? envSuffix : "";
+
+  const suffixIndex = process.argv.findIndex(
+    arg => arg === `--${moduleName}-suffix`
+  );
+
+  const suffix = suffixIndex !== -1 ? process.argv[suffixIndex + 1] : "";
   const bin = path.join(npmBin, moduleName);
   const finalCommand = [bin, restOfCommand, suffix].join(" ");
   console.log(childProcess.execSync(finalCommand).toString());

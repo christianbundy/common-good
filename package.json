@@ -4,8 +4,8 @@
   "description": "All of the best practices without any of the boilerplate",
   "main": "index.js",
   "scripts": {
-    "fix": "node . fix",
-    "test": "dependency_check_suffix='-i eslint -i prettier -i typescript -i dependency-check -i cspell -i stylelint -i lockfile-lint' node ."
+    "fix": "./index.js fix",
+    "test": "./index.js check --dependency-check-suffix '-i eslint -i prettier -i typescript -i dependency-check -i cspell -i stylelint -i lockfile-lint'"
   },
   "bin": {
     "common-good": "index.js"
