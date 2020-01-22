@@ -44,6 +44,8 @@ const run = command => {
   console.log(childProcess.execSync(finalCommand).toString());
 };
 
+console.log(process.argv)
+
 const subCommand = process.argv[2];
 
 if (subCommand == null || subCommand === "check") {
