@@ -34,7 +34,7 @@ const checkCommands = [
   "stylelint --allow-empty-input **/*.css",
   `tsc --allowJs --resolveJsonModule --lib es2018,dom --checkJs --noEmit --skipLibCheck ${main}`,
   "dependency-check --missing -i common-good ./package.json",
-  "cspell --no-summary **/*.{js,ts,md",
+  "cspell --no-summary **/*.{js,ts,md}",
   "prettier --check **/*.{js,ts,jsx,json,css,scss,less,html,vue,gql,md,yaml}"
 ];
 
