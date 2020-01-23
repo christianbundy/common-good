@@ -34,12 +34,12 @@ const checkCommands = [
   "stylelint --allow-empty-input **/*.css",
   `tsc --allowJs --resolveJsonModule --lib es2018,dom --checkJs --noEmit --skipLibCheck ${main}`,
   "dependency-check --missing -i common-good ./package.json",
-  "cspell --no-summary **.{js,ts,md",
-  "prettier --check **.{js,ts,jsx,json,css,scss,less,html,vue,gql,md,yaml}"
+  "cspell --no-summary **/*.{js,ts,md",
+  "prettier --check **/*.{js,ts,jsx,json,css,scss,less,html,vue,gql,md,yaml}"
 ];
 
 const fixCommands = [
-  "prettier --write **.{js,ts,jsx,json,css,scss,less,html,vue,gql,md,yaml}",
+  "prettier --write **/*.{js,ts,jsx,json,css,scss,less,html,vue,gql,md,yaml}",
   "stylelint --fix --allow-empty-input **/*.css",
   `eslint -c ${eslintConfig} --fix ${main}`
 ];
