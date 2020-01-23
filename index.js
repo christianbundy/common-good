@@ -56,16 +56,16 @@ const run = command => {
     const suffixArgs = process.argv[suffixIndex + 1].split(" ");
     restOfCommand.push(...suffixArgs);
   }
-  console.log(`=> ${moduleName} ${restOfCommand.join(" ")}`);
+  process.stdout.write(`=> ${moduleName} ${restOfCommand.join(" ")}\n`);
   const bin = path.join(npmBin, moduleName);
   const result = childProcess.spawnSync(bin, restOfCommand, {
     cwd: process.cwd()
   });
   if (result.stdout) {
-    console.log(result.stdout.toString().trim());
+    process.stdout.write(result.stdout.toString());
   }
   if (result.stderr) {
-    console.error(result.stderr.toString().trim());
+    process.stderr.write(result.stderr.toString());
   }
   if (result.error) {
     throw result.error;
