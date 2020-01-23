@@ -59,7 +59,7 @@ const run = command => {
   process.stdout.write(`=> ${moduleName} ${restOfCommand.join(" ")}\n`);
   const bin = path.join(npmBin, moduleName);
   const result = childProcess.spawnSync(bin, restOfCommand, {
-    cwd: process.cwd()
+    cwd: __dirname
   });
   if (result.stdout) {
     process.stdout.write(result.stdout.toString());
