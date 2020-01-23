@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 
 const npmBin = childProcess
-  .spawnSync("npm", ["bin"], { cwd: __dirname })
+  .spawnSync("npm", ["bin"], { cwd: process.cwd() })
   .stdout.toString()
   .trim();
 
@@ -59,7 +59,7 @@ const run = command => {
   process.stdout.write(`=> ${moduleName} ${restOfCommand.join(" ")}\n`);
   const bin = path.join(npmBin, moduleName);
   const result = childProcess.spawnSync(bin, restOfCommand, {
-    cwd: __dirname
+    cwd: process.cwd()
   });
   if (result.stdout) {
     process.stdout.write(result.stdout.toString());
