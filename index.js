@@ -27,7 +27,7 @@ if (main === "") {
   );
 }
 
-const eslintConfig = require.resolve("eslint/conf/eslint-recommended");
+const eslintConfig = require.resolve("./.eslintrc");
 
 const checkCommands = [
   `eslint -c ${eslintConfig} ${main}`,
