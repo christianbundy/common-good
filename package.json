@@ -9,7 +9,8 @@
     "preversion": "npm test"
   },
   "bin": {
-    "common-good": "index.js"
+    "common-good": "index.js",
+    "cg": "index.js"
   },
   "author": "Christian Bundy <christianbundy@fraction.io>",
   "license": "AGPL-3.0",
