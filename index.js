@@ -10,10 +10,7 @@ const npmBin = childProcess
   .trim();
 
 // Fix package.json
-childProcess
-  .spawnSync("npm", ["init", "-y"])
-  .stdout.toString()
-  .trim();
+childProcess.spawnSync("npm", ["init", "-y"]);
 
 const packageString = fs.readFileSync(
   path.join(process.cwd(), "package.json"),
