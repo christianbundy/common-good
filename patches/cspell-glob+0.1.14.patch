@@ -1,32 +1,26 @@
 diff --git a/node_modules/cspell-glob/lib/GlobMatcher.js b/node_modules/cspell-glob/lib/GlobMatcher.js
-index ef9b0ad..472e42f 100644
+index ef9b0ad..ff633da 100644
 --- a/node_modules/cspell-glob/lib/GlobMatcher.js
 +++ b/node_modules/cspell-glob/lib/GlobMatcher.js
-@@ -50,9 +50,19 @@ function buildMatcherFn(patterns, root) {
+@@ -50,7 +50,15 @@ function buildMatcherFn(patterns, root) {
      const negRules = rules.filter(r => r.isNeg);
      const posRules = rules.filter(r => !r.isNeg);
      const fn = (filename) => {
 -        filename = filename.replace(/^[^/]/, '/$&');
--        const offset = r === filename.slice(0, r.length) ? r.length : 0;
--        const fname = filename.slice(offset);
-+      // On Unixy systems, `root === '/'`, but on Windows this is `C:\` or similar.
-+      if (process.platform !== 'win32') {
-+	filename = filename.replace(/^[^/]/, '/$&');
-+      } else {
-+	const driveLetter = path.parse(process.cwd()).root[0] // "C" or "D" or similar.
-+	const prefix = `${driveLetter}:`
-+	if (filename.startsWith(prefix) === false) {
-+	  filename = `${prefix}${filename}`
++        if (process.platform !== 'win32') {
++	    filename = filename.replace(/^[^/]/, '/$&');
++	} else {
++	    const driveLetter = path.parse(process.cwd()).root[0] // "C" or "D" or similar.
++	    const prefix = `${driveLetter}:`
++	    if (filename.startsWith(prefix) === false) {
++		filename = `${prefix}${filename}`
++	    }
 +	}
-+      }
-+
-+      const offset = r === filename.slice(0, r.length) ? r.length : 0;
-+      const fname = filename.slice(offset);
+         const offset = r === filename.slice(0, r.length) ? r.length : 0;
+         const fname = filename.slice(offset);
          for (const rule of negRules) {
-             if (rule.fn(fname)) {
-                 return { matched: false, glob: rule.glob, index: rule.index, isNeg: rule.isNeg };
 diff --git a/node_modules/cspell-glob/package.json b/node_modules/cspell-glob/package.json
-index 943ff96..2b629ea 100644
+index 0edd5ba..2b629ea 100644
 --- a/node_modules/cspell-glob/package.json
 +++ b/node_modules/cspell-glob/package.json
 @@ -1,26 +1,32 @@
@@ -66,7 +60,7 @@ index 943ff96..2b629ea 100644
    "_resolved": "https://registry.npmjs.org/cspell-glob/-/cspell-glob-0.1.14.tgz",
 -  "_shasum": "8526bdad921aed90630fea5d8cb61dcac4ce5a29",
 -  "_spec": "cspell-glob@https://registry.npmjs.org/cspell-glob/-/cspell-glob-0.1.14.tgz",
--  "_where": "/tmp/tmp-136909aUAr5tvBH1KF",
+-  "_where": "/tmp/tmp-1376343r0HozP9nohe",
 +  "_spec": "0.1.14",
 +  "_where": "/home/christianbundy/src/common-good",
    "author": {
