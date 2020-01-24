@@ -1,17 +1,23 @@
 # Common-Good
 
-> All of the best practices without any of the boilerplate.
+**Improve your code without configuration or controversy.** This is a JavaScript
+module that bundles the most popular code formatting and static analysis tools
+so that you don't have to install or configure them on your own. Each tool works
+automatically without any configuration, which reduces the number of problems
+your project needs to manage.
 
-Software is a complex and difficult topic, but we can make it easier for
-everyone if we use best practices that make our code predictable and accessible.
-Most people want to _have_ a style guide and a handful of static analysis tools,
-but it's not a fun problem to spend time on.
+- **[CSpell][0]:** All of your code should use real English words, when possible.
+- **[Dependency-Check][1]:** The dependencies you use should match `package.json`.
+- **[ESLint][2]:** Your JavaScript should avoid common problems.
+- **[Prettier][3]:** All of your code should be formatted predictably.
+- **[StyleLint][4]:** Your styles (CSS, SCSS, etc) should avoid common problems.
+- **[TypeScript][5]:** Your JavaScript should pass basic type analysis.
 
 ## Usage
 
 Install with [npm](https://npmjs.org/):
 
-```js
+```javascript
 npm install --save-dev common-good
 ```
 
@@ -27,17 +33,13 @@ Add common-good to `package.json`:
 
 Resolve small problems with `npm run fix` and test code with `npm test`.
 
-## Acknowledgements
-
-Common-Good is just a thin wrapper around other great projects.
-
-- CSpell
-- Dependency-Check
-- ESLint
-- Prettier
-- StyleLint
-- TypeScript
-
 ## License
 
 AGPL-3.0
+
+[0]: https://github.com/streetsidesoftware/cspell#readme
+[1]: https://github.com/dependency-check-team/dependency-check
+[2]: https://eslint.org/
+[3]: https://prettier.io/
+[4]: https://stylelint.io/
+[5]: https://www.typescriptlang.org/
