@@ -1,18 +1,16 @@
 #!/usr/bin/env node
 
-const childProcess = require("child_process");
 const fs = require("fs");
 const path = require("path");
+const crossSpawn = require("cross-spawn");
 
-const npmCommand = process.platform !== "win32" ? "npm" : "npm.cmd";
-
-const npmBin = childProcess
-  .spawnSync(npmCommand, ["bin"], { cwd: process.cwd() })
+const npmBin = crossSpawn
+  .sync("npm", ["bin"], { cwd: process.cwd() })
   .stdout.toString()
   .trim();
 
 // Fix package.json
-childProcess.spawnSync("npm", ["init", "-y"]);
+crossSpawn.sync("npm", ["init", "-y"]);
 
 const packageString = fs.readFileSync(
   path.join(process.cwd(), "package.json"),
@@ -57,15 +55,11 @@ const run = command => {
   }
   process.stdout.write(`=> ${moduleName} ${restOfCommand.join(" ")}\n`);
   const bin = path.join(npmBin, moduleName);
-  const result = childProcess.spawnSync(bin, restOfCommand, {
-    cwd: process.cwd()
+  const result = crossSpawn.sync(bin, restOfCommand, {
+    cwd: process.cwd(),
+    stdio: "inherit"
   });
-  if (result.stdout) {
-    process.stdout.write(result.stdout.toString());
-  }
-  if (result.stderr) {
-    process.stderr.write(result.stderr.toString());
-  }
+
   if (result.error) {
     throw result.error;
   }
