@@ -4,8 +4,10 @@ const childProcess = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
+const npmCommand = process.platform !== "win32" ? "npm" : "npm.cmd";
+
 const npmBin = childProcess
-  .spawnSync("npm", ["bin"], { cwd: process.cwd() })
+  .spawnSync(npmCommand, ["bin"], { cwd: process.cwd() })
   .stdout.toString()
   .trim();
 
