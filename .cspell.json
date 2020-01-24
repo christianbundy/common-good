@@ -1,4 +1,5 @@
 {
   "version": "0.1",
-  "words": ["AGPL"]
+  "words": ["AGPL"],
+  "ignorePaths": ["node_modules/**", "node_modules\\**"]
 }
