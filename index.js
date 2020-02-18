@@ -27,7 +27,7 @@ if (main === "") {
 const eslintConfig = require.resolve("./.eslintrc");
 
 const checkCommands = [
-  `eslint -c ${eslintConfig} ${main}`,
+  `eslint -c ${eslintConfig} **/*.{js,ts}`,
   "stylelint --allow-empty-input **/*.css",
   `tsc --allowJs --resolveJsonModule --lib es2018,dom --checkJs --noEmit --skipLibCheck ${main}`,
   "dependency-check --missing -i common-good ./package.json",
@@ -38,7 +38,7 @@ const checkCommands = [
 const fixCommands = [
   "prettier --write **/*.{js,ts,jsx,json,css,scss,less,html,vue,gql,md,yaml}",
   "stylelint --fix --allow-empty-input **/*.css",
-  `eslint -c ${eslintConfig} --fix ${main}`
+  `eslint -c ${eslintConfig} --fix **/*.{js,ts}`
 ];
 
 const run = command => {
