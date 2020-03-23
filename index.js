@@ -32,21 +32,21 @@ const checkCommands = [
   `tsc --allowJs --resolveJsonModule --lib es2018,dom --checkJs --noEmit --skipLibCheck ${main}`,
   "dependency-check --missing -i common-good ./package.json",
   "cspell --no-summary **/*.{js,ts,md}",
-  "prettier --check **/*.{js,ts,jsx,json,css,scss,less,html,vue,gql,md,yaml}"
+  "prettier --check .",
 ];
 
 const fixCommands = [
-  "prettier --write **/*.{js,ts,jsx,json,css,scss,less,html,vue,gql,md,yaml}",
+  "prettier --write .",
   "stylelint --fix --allow-empty-input **/*.css",
-  `eslint -c ${eslintConfig} --fix **/*.{js,ts}`
+  `eslint -c ${eslintConfig} --fix **/*.{js,ts}`,
 ];
 
-const run = command => {
+const run = (command) => {
   const moduleName = command.split(" ")[0];
   const restOfCommand = command.split(" ").slice(1);
 
   const suffixIndex = process.argv.findIndex(
-    arg => arg === `--${moduleName}-suffix`
+    (arg) => arg === `--${moduleName}-suffix`
   );
 
   if (suffixIndex !== -1) {
@@ -57,7 +57,7 @@ const run = command => {
   const bin = path.join(npmBin, moduleName);
   const result = crossSpawn.sync(bin, restOfCommand, {
     cwd: process.cwd(),
-    stdio: "inherit"
+    stdio: "inherit",
   });
 
   if (result.error) {

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "fix": "node index.js fix",
-    "test": "node index.js check --dependency-check-suffix \"-i eslint -i prettier -i typescript -i dependency-check -i cspell -i stylelint -i lockfile-lint\"",
+    "test": "node index.js check --dependency-check-suffix \"-i eslint -i prettier -i typescript -i dependency-check -i cspell -i stylelint\"",
     "preversion": "npm test"
   },
   "bin": {
@@ -16,13 +16,12 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "cross-spawn": "^7.0.1",
-    "cspell": "^4.0.46",
+    "cspell": "^4.0.55",
     "dependency-check": "^4.1.0",
     "eslint": "^6.8.0",
-    "lockfile-lint": "^3.0.8",
-    "prettier": "^1.19.1",
-    "stylelint": "^13.0.0",
-    "typescript": "^3.7.5"
+    "prettier": "^2.0.1",
+    "stylelint": "^13.2.1",
+    "typescript": "^3.8.3"
   },
   "repository": {
     "type": "git",
