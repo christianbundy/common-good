@@ -12,3 +12,8 @@ os:
   - linux
   - osx
   - windows
+
+# Never convert EOL characters.
+# https://github.com/prettier/prettier/issues/7853
+git:
+  autocrlf: input
