@@ -1,14 +1,18 @@
+# Don't convert EOL characters.
+git:
+  autocrlf: input
+
 # Use Node.js configuration.
 language: node_js
 
 # Both latest Node.js and latest LTS.
 node_js:
-  - lts/*
+  #  - lts/*
   - node
 
 # All of the operating systems!
 # Note: Windows support is very iffy.
 os:
-  - linux
-  - osx
+  #  - linux
+  #  - osx
   - windows
