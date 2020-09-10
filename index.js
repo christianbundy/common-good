@@ -30,8 +30,7 @@ const checkCommands = [
   `eslint -c ${eslintConfig} **/*.{js,ts}`,
   "stylelint --allow-empty-input **/*.css",
   `tsc --allowJs --resolveJsonModule --lib es2018,dom --checkJs --noEmit --skipLibCheck ${main}`,
-  "dependency-check --missing -i common-good ./package.json",
-  "cspell --no-summary **/*.{js,ts,md}",
+  "depcheck",
   "prettier --check .",
 ];
 
@@ -46,7 +45,7 @@ const run = (command) => {
   const restOfCommand = command.split(" ").slice(1);
 
   const suffixIndex = process.argv.findIndex(
-    (arg) => arg === `--${moduleName}-suffix`
+    (arg) => arg === `--${moduleName}`
   );
 
   if (suffixIndex !== -1) {
