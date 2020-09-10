@@ -26,19 +26,17 @@ if (main === "") {
 
 const eslintConfig = require.resolve("./.eslintrc");
 
-const checkCommands = [
-  `eslint -c ${eslintConfig} **/*.{js,ts}`,
+const testCommands = [
+  `eslint -c ${eslintConfig} **/*.{js,md,ts}`,
   "stylelint --allow-empty-input **/*.css",
-  `tsc --allowJs --resolveJsonModule --lib es2018,dom --checkJs --noEmit --skipLibCheck ${main}`,
-  "dependency-check --missing -i common-good ./package.json",
-  "cspell --no-summary **/*.{js,ts,md}",
   "prettier --check .",
+  "depcheck",
 ];
 
 const fixCommands = [
   "prettier --write .",
   "stylelint --fix --allow-empty-input **/*.css",
-  `eslint -c ${eslintConfig} --fix **/*.{js,ts}`,
+  `eslint -c ${eslintConfig} --fix **/*.{js,md,ts}`,
 ];
 
 const run = (command) => {
@@ -46,7 +44,7 @@ const run = (command) => {
   const restOfCommand = command.split(" ").slice(1);
 
   const suffixIndex = process.argv.findIndex(
-    (arg) => arg === `--${moduleName}-suffix`
+    (arg) => arg === `--${moduleName}`
   );
 
   if (suffixIndex !== -1) {
@@ -63,15 +61,24 @@ const run = (command) => {
   if (result.error) {
     throw result.error;
   }
-  if (result.status !== 0) {
-    process.exit(1);
-  }
+  return result.status;
 };
 
 const subCommand = process.argv[2];
 
-if (subCommand == null || subCommand === "check") {
-  checkCommands.forEach(run);
+const runAll = (commands) => {
+  if (!commands.map(run).every((status) => status === 0)) {
+    process.exit(1);
+  }
+};
+
+if (subCommand === "test") {
+  runAll(testCommands);
 } else if (subCommand === "fix") {
-  fixCommands.forEach(run);
+  runAll(fixCommands);
+} else if (subCommand === "both") {
+  runAll(fixCommands);
+  runAll(testCommands);
+} else {
+  console.log("Usage: common-good <test|fix|both>");
 }
