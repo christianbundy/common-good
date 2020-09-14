@@ -5,10 +5,11 @@ module.exports = {
     es2021: true,
     node: true,
   },
+  parser: "@typescript-eslint/parser",
   extends: ["eslint:recommended"],
   parserOptions: {
     ecmaVersion: 12,
   },
-  plugins: ["markdown"],
+  plugins: ["markdown", "@typescript-eslint"],
   rules: {},
 };

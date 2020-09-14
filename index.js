@@ -3,11 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const crossSpawn = require("cross-spawn");
-
-const npmBin = crossSpawn
-  .sync("npm", ["bin"], { cwd: process.cwd() })
-  .stdout.toString()
-  .trim();
+const resolveBin = require("resolve-bin");
 
 // Fix package.json
 crossSpawn.sync("npm", ["init", "-y"]);
@@ -27,7 +23,7 @@ if (main === "") {
 const eslintConfig = require.resolve("./.eslintrc");
 
 const testCommands = [
-  `eslint -c ${eslintConfig} **/*.{js,md,ts}`,
+  `eslint -c ${eslintConfig} **/*.{js,jsx,md,ts,tsx}`,
   "stylelint --allow-empty-input **/*.css",
   "prettier --check .",
   "depcheck",
@@ -36,7 +32,7 @@ const testCommands = [
 const fixCommands = [
   "prettier --write .",
   "stylelint --fix --allow-empty-input **/*.css",
-  `eslint -c ${eslintConfig} --fix **/*.{js,md,ts}`,
+  `eslint -c ${eslintConfig} --fix **/*.{js,jsx,md,ts,tsx}`,
 ];
 
 const run = (command) => {
@@ -52,7 +48,7 @@ const run = (command) => {
     restOfCommand.push(...suffixArgs);
   }
   process.stdout.write(`=> ${moduleName} ${restOfCommand.join(" ")}\n`);
-  const bin = path.join(npmBin, moduleName);
+  const bin = resolveBin.sync(moduleName);
   const result = crossSpawn.sync(bin, restOfCommand, {
     cwd: process.cwd(),
     stdio: "inherit",
