@@ -5,9 +5,6 @@ const path = require("path");
 const crossSpawn = require("cross-spawn");
 const resolveBin = require("resolve-bin");
 
-// Fix package.json
-crossSpawn.sync("npm", ["init", "-y"]);
-
 const packageString = fs.readFileSync(
   path.join(process.cwd(), "package.json"),
   "utf8"
