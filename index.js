@@ -18,10 +18,11 @@ if (main === "") {
 }
 
 const eslintConfig = require.resolve("./.eslintrc");
+const stylelintConfig = require.resolve("./.stylelintrc.json");
 
 const testCommands = [
   `eslint -c ${eslintConfig} **/*.{js,jsx,md,ts,tsx}`,
-  "stylelint --allow-empty-input **/*.css",
+  `stylelint --config ${stylelintConfig} --allow-empty-input **/*.css`,
   "prettier --check .",
   "depcheck",
 ];
