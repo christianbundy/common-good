@@ -3,7 +3,6 @@
 const fs = require("fs");
 const path = require("path");
 const crossSpawn = require("cross-spawn");
-const resolveBin = require("resolve-bin");
 
 const packageString = fs.readFileSync(
   path.join(process.cwd(), "package.json"),
@@ -33,6 +32,16 @@ const fixCommands = [
   `eslint -c ${eslintConfig} --fix **/*.{js,jsx,md,ts,tsx}`,
 ];
 
+const lintStagedFix = path.join(__dirname, ".lint-staged-fix.json");
+const lintStagedTest = path.join(__dirname, ".lint-staged-test.json");
+
+const testStagedCommands = [
+  `lint-staged --config ${lintStagedTest}`,
+  "depcheck",
+];
+
+const fixStagedCommands = [`lint-staged --config ${lintStagedFix}`];
+
 const run = (command) => {
   const moduleName = command.split(" ")[0];
   const restOfCommand = command.split(" ").slice(1);
@@ -46,8 +55,7 @@ const run = (command) => {
     restOfCommand.push(...suffixArgs);
   }
   process.stdout.write(`=> ${moduleName} ${restOfCommand.join(" ")}\n`);
-  const bin = resolveBin.sync(moduleName);
-  const result = crossSpawn.sync(bin, restOfCommand, {
+  const result = crossSpawn.sync("npx", [moduleName, ...restOfCommand], {
     cwd: process.cwd(),
     stdio: "inherit",
   });
@@ -73,6 +81,13 @@ if (subCommand === "test") {
 } else if (subCommand === "both") {
   runAll(fixCommands);
   runAll(testCommands);
+} else if (subCommand === "test-staged") {
+  runAll(testStagedCommands);
+} else if (subCommand === "fix-staged") {
+  runAll(fixStagedCommands);
+} else if (subCommand === "both-staged") {
+  runAll(fixStagedCommands);
+  runAll(testStagedCommands);
 } else {
-  console.log("Usage: common-good <test|fix|both>");
+  console.log("Usage: common-good <test|fix|both>[-staged]");
 }
