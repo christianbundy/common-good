@@ -30,6 +30,7 @@ const fixCommands = [
   "prettier --write .",
   "stylelint --fix --allow-empty-input **/*.css",
   `eslint -c ${eslintConfig} --fix **/*.{js,jsx,md,ts,tsx}`,
+  "depcheck",
 ];
 
 const lintStagedFix = path.join(__dirname, ".lint-staged-fix.json");
@@ -40,7 +41,7 @@ const testStagedCommands = [
   "depcheck",
 ];
 
-const fixStagedCommands = [`lint-staged --config ${lintStagedFix}`];
+const fixStagedCommands = [`lint-staged --config ${lintStagedFix}`, "depcheck"];
 
 const run = (command) => {
   const moduleName = command.split(" ")[0];
@@ -78,16 +79,11 @@ if (subCommand === "test") {
   runAll(testCommands);
 } else if (subCommand === "fix") {
   runAll(fixCommands);
-} else if (subCommand === "both") {
-  runAll(fixCommands);
-  runAll(testCommands);
 } else if (subCommand === "test-staged") {
   runAll(testStagedCommands);
 } else if (subCommand === "fix-staged") {
   runAll(fixStagedCommands);
-} else if (subCommand === "both-staged") {
-  runAll(fixStagedCommands);
-  runAll(testStagedCommands);
 } else {
-  console.log("Usage: common-good <test|fix|both>[-staged]");
+  console.log("Usage: common-good <test|fix>[-staged]");
+  process.exit(1);
 }

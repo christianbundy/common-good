@@ -39,7 +39,7 @@
   "keywords": [],
   "husky": {
     "hooks": {
-      "pre-commit": "common-good both-staged"
+      "pre-commit": "common-good fix-staged"
     }
   }
 }
