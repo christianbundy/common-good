@@ -1,0 +1,13 @@
+ignores:
+  [
+    "depcheck",
+    "eslint",
+    "prettier",
+    "stylelint",
+    "typescript",
+    "stylelint-config-recommended",
+    "lint-staged",
+    "@typescript-eslint/eslint-plugin",
+    "@typescript-eslint/parser",
+    "eslint-plugin-markdown",
+  ]

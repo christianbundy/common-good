@@ -1,5 +1,0 @@
-{
-  "*.{js,jsx,md,ts,tsx}": "eslint -c .eslintrc.js ",
-  "*.css": "stylelint --config ${stylelintConfig} --allow-empty-input",
-  "*": "prettier --check"
-}

@@ -16,8 +16,8 @@ if (main === "") {
   );
 }
 
-const eslintConfig = require.resolve("./.eslintrc");
-const stylelintConfig = require.resolve("./.stylelintrc.json");
+const eslintConfig = require.resolve("./config/eslint.js");
+const stylelintConfig = require.resolve("./config/stylelint.json");
 
 const testCommands = [
   `eslint -c ${eslintConfig} **/*.{js,jsx,md,ts,tsx}`,
@@ -28,13 +28,13 @@ const testCommands = [
 
 const fixCommands = [
   "prettier --write .",
-  "stylelint --fix --allow-empty-input **/*.css",
   `eslint -c ${eslintConfig} --fix **/*.{js,jsx,md,ts,tsx}`,
+  `stylelint --config ${stylelintConfig} --fix --allow-empty-input **/*.css`,
   "depcheck",
 ];
 
-const lintStagedFix = path.join(__dirname, ".lint-staged-fix.json");
-const lintStagedTest = path.join(__dirname, ".lint-staged-test.json");
+const lintStagedFix = path.join(__dirname, "config", "lint-staged-fix.js");
+const lintStagedTest = path.join(__dirname, "config", "lint-staged-test.js");
 
 const testStagedCommands = [
   `lint-staged --config ${lintStagedTest}`,

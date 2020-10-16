@@ -1,1 +1,0 @@
-ignores: ["depcheck", "eslint", "prettier", "stylelint", "typescript", "stylelint-config-recommended", "lint-staged"]

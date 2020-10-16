@@ -4,7 +4,7 @@
   "description": "All of the best practices without any of the boilerplate",
   "main": "index.js",
   "scripts": {
-    "test": "common-good test"
+    "test": "node index.js test"
   },
   "bin": {
     "common-good": "index.js",
@@ -39,7 +39,7 @@
   "keywords": [],
   "husky": {
     "hooks": {
-      "pre-commit": "common-good fix-staged"
+      "pre-commit": "node index.js fix-staged && node index.js test"
     }
   }
 }
