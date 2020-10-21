@@ -1,6 +1,6 @@
 {
   "name": "common-good",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "All of the best practices without any of the boilerplate",
   "main": "index.js",
   "scripts": {
