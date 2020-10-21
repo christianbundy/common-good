@@ -22,12 +22,12 @@ const stylelintConfig = require.resolve("./config/stylelint.json");
 const testCommands = [
   `eslint -c ${eslintConfig} **/*.{js,jsx,md,ts,tsx}`,
   `stylelint --config ${stylelintConfig} --allow-empty-input **/*.css`,
-  "prettier --check .",
+  "prettier --ignore-unknown --check .",
   "depcheck",
 ];
 
 const fixCommands = [
-  "prettier --write .",
+  "prettier --ignore-unknown --write .",
   `eslint -c ${eslintConfig} --fix **/*.{js,jsx,md,ts,tsx}`,
   `stylelint --config ${stylelintConfig} --fix --allow-empty-input **/*.css`,
   "depcheck",
