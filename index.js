@@ -28,7 +28,7 @@ const testCommands = [
 
 const fixCommands = [
   "prettier --ignore-unknown --write .",
-  `eslint -c ${eslintConfig} --fix **/*.{js,jsx,md,ts,tsx}`,
+  `eslint -c ${eslintConfig} --fix .`,
   `stylelint --config ${stylelintConfig} --fix --allow-empty-input **/*.css`,
   "depcheck",
 ];
